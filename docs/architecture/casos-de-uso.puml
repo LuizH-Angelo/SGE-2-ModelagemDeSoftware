@@ -1,0 +1,52 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Empresa Vendedora" as V
+actor "Empresa Compradora" as C
+actor "Gateway de Escrow" as G <<sistema externo>>
+
+rectangle "Marketplace B2B de Sobras Industriais" {
+  usecase "Cadastrar empresa" as UC01
+  usecase "Cadastrar lote de resíduo" as UC02
+  usecase "Publicar anúncio" as UC03
+  usecase "Editar ou cancelar anúncio" as UC04
+
+  usecase "Consultar anúncios" as UC05
+  usecase "Enviar proposta" as UC06
+  usecase "Analisar proposta" as UC07
+  usecase "Aceitar ou recusar proposta" as UC08
+  usecase "Enviar contraproposta" as UC09
+  usecase "Responder contraproposta" as UC10
+  usecase "Encerrar negociação" as UC11
+
+  usecase "Realizar pagamento" as UC12
+  usecase "Reter valor em custódia" as UC13
+  usecase "Autorizar despacho do lote" as UC14
+  usecase "Confirmar recebimento" as UC15
+}
+
+V --> UC01
+V --> UC02
+V --> UC03
+V --> UC04
+V --> UC07
+V --> UC09
+V --> UC11
+V --> UC14
+
+C --> UC01
+C --> UC05
+C --> UC06
+C --> UC10
+C --> UC12
+C --> UC15
+
+G --> UC13
+
+UC03 ..> UC02 : <<include>>
+UC07 ..> UC08 : <<include>>
+UC09 ..> UC07 : <<extend>>
+UC12 ..> UC13 : <<include>>
+UC14 ..> UC13 : <<include>>
+@enduml
